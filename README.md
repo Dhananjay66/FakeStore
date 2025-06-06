@@ -16,7 +16,7 @@ A Django web app that displays products from the [FakeStoreAPI](https://fakestor
 
 ## 🌐 Live Demo
 
-> 🔗 [https://your-live-app-link.com](https://your-live-app-link.com) *(Replace this once deployed)*
+> 🔗 https://fakestore-p80j.onrender.com
 
 ---
 
