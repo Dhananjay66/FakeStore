@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Fake Store Products</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+    .navbar {
+      background-color: #343a40;
+    }
+    .navbar-brand {
+      color: white;
+      font-weight: bold;
+    }
+    .navbar-brand:hover {
+      color: #ccc;
+    }
+    .card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border: none;
+    }
+    .card:hover {
+      transform: scale(1.02);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    }
+    .product-title {
+      font-size: 1.15rem;
+      font-weight: 600;
+    }
+    .product-price {
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: #28a745;
+    }
+    .truncate {
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    footer {
+      padding: 2rem 0;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg mb-4">
+    <div class="container">
+      <a class="navbar-brand" href="{% url 'product_list' %}">🛍️ Fake Store</a>
+    </div>
+  </nav>
+
+  <!-- Filter Form -->
+  <div class="container mb-4">
+    <form method="get" class="row g-2 align-items-end">
+      <div class="col-md-6">
+        <input type="text" name="q" class="form-control" placeholder="Search products..." value="{{ request.GET.q }}">
+      </div>
+      <div class="col-md-4">
+        <select name="category" class="form-select">
+          <option value="all">All Categories</option>
+          {% for cat in categories %}
+            <option value="{{ cat }}" {% if request.GET.category == cat %}selected{% endif %}>{{ cat|title }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-md-2">
+        <button type="submit" class="btn btn-dark w-100">Filter</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Product Grid -->
+  <div class="container">
+    <h2 class="text-center mb-4">All Products</h2>
+    <div class="row g-4">
+      {% for product in products %}
+      <div class="col-xl-3 col-lg-4 col-md-6">
+        <div class="card h-100 shadow-sm">
+          <img src="{{ product.image }}" class="card-img-top p-3" alt="Product Image" style="height: 250px; object-fit: contain;">
+          <div class="card-body d-flex flex-column">
+            <h5 class="product-title">{{ product.title }}</h5>
+            <p class="text-muted mb-1"><strong>Category:</strong> {{ product.category }}</p>
+            <p class="truncate text-secondary small">{{ product.description }}</p>
+            <div class="mt-auto">
+              <p class="product-price mb-1">${{ product.price }}</p>
+              <p class="text-warning mb-0">⭐ {{ product.rating_rate }} ({{ product.rating_count }} reviews)</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="text-center mt-5 text-muted bg-light">
+    <p class="mb-0">© 2025 Fake Store API Display – Django + Bootstrap</p>
+  </footer>
+
+</body>
+</html>
